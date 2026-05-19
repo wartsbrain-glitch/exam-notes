@@ -3,33 +3,40 @@ layout: home
 
 hero:
   name: 考研知识库
-  text: 数学 / 英语 / 政治 / 信号与系统
-  tagline: 西电生命科学学院备考笔记整理
-  actions:
-    - theme: brand
-      text: 数学
-      link: /math/
-    - theme: brand
-      text: 英语
-      link: /english/
-    - theme: alt
-      text: 政治
-      link: /politics/
-    - theme: alt
-      text: 信号与系统
-      link: /signals/
+  text: 
+  tagline: 数学 · 英语 · 政治 · 信号与系统
+  actions: []
 
 features:
-  - title: 数学
-    details: 高数、线代、概率统计公式定理与解题技巧
+  - icon: <span style="font-size:48px">📐</span>
+    title: 数学
+    details: 高数 · 线代 · 概率统计
     link: /math/
-  - title: 英语
-    details: 词汇、阅读、写作、翻译模块化整理
+    linkText: 进入数学
+  - icon: <span style="font-size:48px">📝</span>
+    title: 英语
+    details: 词汇 · 阅读 · 写作
     link: /english/
-  - title: 政治
-    details: 马原、毛中特、史纲、思修、时政
+    linkText: 进入英语
+  - icon: <span style="font-size:48px">📕</span>
+    title: 政治
+    details: 马原 · 毛中特 · 时政
     link: /politics/
-  - title: 信号与系统
-    details: 时域、频域、复频域分析与系统函数
+    linkText: 进入政治
+  - icon: <span style="font-size:48px">📡</span>
+    title: 信号与系统
+    details: 时域 · 频域 · 复频域
     link: /signals/
+    linkText: 进入信号与系统
 ---
+
+<style>
+.VPFeatures .VPFeature {
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.VPFeatures .VPFeature:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+</style>

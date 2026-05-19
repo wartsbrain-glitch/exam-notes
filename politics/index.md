@@ -1,32 +1,28 @@
 # 政治
 
-考研政治复习笔记，按科目与专题整理。
+<GraphView
+  :nodes="[
+    { id: 'materialism', label: '唯物论', url: '/exam-notes/politics/marx-philosophy' },
+    { id: 'dialectics', label: '辩证法', url: '/exam-notes/politics/marx-philosophy' },
+    { id: 'epistemology', label: '认识论', url: '/exam-notes/politics/marx-philosophy' },
+    { id: 'commodity', label: '商品', url: '/exam-notes/politics/marx-economics' },
+    { id: 'surplus', label: '剩余价值', url: '/exam-notes/politics/marx-economics' },
+    { id: 'revolution', label: '新民主主义革命', url: '/exam-notes/politics/mao-revolution' },
+    { id: 'construction', label: '社会主义建设', url: '/exam-notes/politics/mao-construction' },
+    { id: 'current', label: '时政', url: '/exam-notes/politics/current-events' }
+  ]"
+  :edges="[
+    { id: 'p1', source: 'materialism', target: 'dialectics', label: '唯物论是辩证法的基础' },
+    { id: 'p2', source: 'dialectics', target: 'epistemology', label: '辩证法指导认识论' },
+    { id: 'p3', source: 'commodity', target: 'surplus', label: '商品交换产生剩余价值' },
+    { id: 'p4', source: 'revolution', target: 'construction', label: '革命成功后进入建设阶段' }
+  ]"
+/>
 
-## 目录
+## 笔记
 
-- [马克思主义基本原理](marx-philosophy)
-  - 哲学
-  - 政治经济学
-- [毛泽东思想和中国特色社会主义](mao-revolution)
-  - 新民主主义革命
-  - 社会主义建设
-- [时事政治](current-events)
-  - 2025 时政热点
-
-## 记忆碎片
-
-### 马原哲学 —— 对立统一规律
-
-- **矛盾的同一性**：矛盾双方相互依存、相互贯通
-- **矛盾的斗争性**：矛盾双方相互排斥、相互分离
-- **方法论**：一分为二、具体问题具体分析
-
-### 毛中特 —— 新民主主义革命三大法宝
-
-1. 统一战线
-2. 武装斗争
-3. 党的建设
-
----
-
-> 政治适合用碎片时间反复看，形成肌肉记忆。
+- [哲学](marx-philosophy)
+- [政治经济学](marx-economics)
+- [新民主主义革命](mao-revolution)
+- [社会主义建设](mao-construction)
+- [2025 时政热点](current-events)

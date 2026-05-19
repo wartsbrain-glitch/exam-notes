@@ -47,24 +47,29 @@ export default defineConfig({
       ],
       '/english/': [
         {
-          text: '词汇',
+          text: '熟词僻意',
           items: [
             { text: '高频核心词', link: '/english/vocabulary-core' },
             { text: '词根词缀', link: '/english/vocabulary-affix' }
           ]
         },
         {
-          text: '阅读',
+          text: '典型翻译长难句',
           items: [
-            { text: '长难句分析', link: '/english/reading-long-sentences' },
-            { text: '题型技巧', link: '/english/reading-skills' }
+            { text: '长难句分析', link: '/english/reading-long-sentences' }
           ]
         },
         {
-          text: '写作',
+          text: '作文精解',
           items: [
             { text: '万能句型', link: '/english/writing-templates' },
             { text: '图表作文', link: '/english/writing-graphs' }
+          ]
+        },
+        {
+          text: '长篇阅读分析',
+          items: [
+            { text: '题型技巧', link: '/english/reading-skills' }
           ]
         }
       ],
