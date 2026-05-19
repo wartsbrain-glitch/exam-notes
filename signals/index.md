@@ -1,27 +1,14 @@
 # 信号与系统
 
-<GraphView
-  :nodes="[
-    { id: 'signal', label: '信号', url: '/exam-notes/signals/signal-basics' },
-    { id: 'system', label: '系统', url: '/exam-notes/signals/system-properties' },
-    { id: 'time', label: '时域分析', url: '/exam-notes/signals/time-continuous' },
-    { id: 'convolution', label: '卷积', url: '/exam-notes/signals/convolution' },
-    { id: 'fourier', label: '傅里叶变换', url: '/exam-notes/signals/fourier-transform' },
-    { id: 'sampling', label: '抽样定理', url: '/exam-notes/signals/sampling-theorem' },
-    { id: 'laplace', label: '拉普拉斯变换', url: '/exam-notes/signals/laplace-transform' },
-    { id: 'ztransform', label: 'Z变换', url: '/exam-notes/signals/z-transform' },
-    { id: 'hs', label: '系统函数', url: '/exam-notes/signals/system-function' }
-  ]"
-  :edges="[
-    { id: 's1', source: 'signal', target: 'system', label: '信号输入系统产生响应' },
-    { id: 's2', source: 'time', target: 'convolution', label: '时域分析的核心工具' },
-    { id: 's3', source: 'time', target: 'fourier', label: '傅里叶变换将时域转到频域' },
-    { id: 's4', source: 'time', target: 'laplace', label: '拉普拉斯变换将时域转到复频域' },
-    { id: 's5', source: 'fourier', target: 'sampling', label: '频域分析导出抽样定理' },
-    { id: 's6', source: 'laplace', target: 'hs', label: '系统函数是拉普拉斯域的描述' },
-    { id: 's7', source: 'ztransform', target: 'hs', label: '离散系统的系统函数基于Z变换' }
-  ]"
-/>
+<div class="graph-entry">
+  <a href="./graph.html">
+    <div class="graph-card signals-theme">
+      <div class="graph-icon">🌐</div>
+      <div class="graph-title">3D 知识图谱</div>
+      <div class="graph-desc">点击进入交互式三维概念关系图，探索知识点之间的联系</div>
+    </div>
+  </a>
+</div>
 
 ## 笔记
 
@@ -37,3 +24,42 @@
 - [Z变换](z-transform)
 - [系统函数 H(s)](system-function)
 - [状态方程](state-space)
+
+<style>
+.graph-entry {
+  text-align: center;
+  margin: 28px 0 20px;
+}
+.graph-card {
+  display: inline-block;
+  padding: 32px 48px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  min-width: 260px;
+}
+.graph-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+}
+.signals-theme {
+  background: linear-gradient(135deg, #0891b2, #2563eb);
+  box-shadow: 0 4px 20px rgba(8, 145, 178, 0.3);
+}
+.graph-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+.graph-title {
+  font-size: 20px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
+.graph-desc {
+  font-size: 13px;
+  opacity: 0.9;
+}
+</style>

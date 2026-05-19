@@ -1,31 +1,14 @@
 # 数学
 
-<GraphView
-  :nodes="[
-    { id: 'limit', label: '极限', url: '/exam-notes/math/calculus-limit' },
-    { id: 'derivative', label: '导数', url: '/exam-notes/math/calculus-derivative' },
-    { id: 'integral', label: '积分', url: '/exam-notes/math/calculus-integral' },
-    { id: 'continuity', label: '连续', url: '/exam-notes/math/calculus-limit' },
-    { id: 'infinitesimal', label: '无穷小', url: '/exam-notes/math/calculus-limit' },
-    { id: 'determinant', label: '行列式', url: '/exam-notes/math/linear-determinant' },
-    { id: 'matrix', label: '矩阵', url: '/exam-notes/math/linear-matrix' },
-    { id: 'eigen', label: '特征值', url: '/exam-notes/math/linear-eigen' },
-    { id: 'probability', label: '概率', url: '/exam-notes/math/probability-basic' },
-    { id: 'distribution', label: '分布', url: '/exam-notes/math/probability-distribution' }
-  ]"
-  :edges="[
-    { id: 'e1', source: 'limit', target: 'derivative', label: '导数定义基于极限' },
-    { id: 'e2', source: 'limit', target: 'integral', label: '定积分定义基于极限' },
-    { id: 'e3', source: 'derivative', target: 'integral', label: '微积分基本定理' },
-    { id: 'e4', source: 'limit', target: 'continuity', label: '连续是极限值等于函数值' },
-    { id: 'e5', source: 'limit', target: 'infinitesimal', label: 'lim f(x)=A ⟺ f(x)=A+α, α为无穷小' },
-    { id: 'e6', source: 'infinitesimal', target: 'limit', label: '等价无穷小可替换求极限' },
-    { id: 'e7', source: 'derivative', target: 'continuity', label: '可导必连续（充分非必要）' },
-    { id: 'e8', source: 'determinant', target: 'matrix', label: '行列式是方阵的属性' },
-    { id: 'e9', source: 'matrix', target: 'eigen', label: '特征值是矩阵的特征' },
-    { id: 'e10', source: 'probability', target: 'distribution', label: '分布描述随机变量的概率规律' }
-  ]"
-/>
+<div class="graph-entry">
+  <a href="./graph.html">
+    <div class="graph-card math-theme">
+      <div class="graph-icon">🌐</div>
+      <div class="graph-title">3D 知识图谱</div>
+      <div class="graph-desc">点击进入交互式三维概念关系图，探索知识点之间的联系</div>
+    </div>
+  </a>
+</div>
 
 ## 笔记
 
@@ -37,3 +20,50 @@
 - [特征值与特征向量](linear-eigen)
 - [随机事件与概率](probability-basic)
 - [随机变量及其分布](probability-distribution)
+
+<style>
+.graph-entry {
+  text-align: center;
+  margin: 28px 0 20px;
+}
+.graph-card {
+  display: inline-block;
+  padding: 32px 48px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  min-width: 260px;
+}
+.graph-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+}
+.math-theme {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.3);
+}
+.signals-theme {
+  background: linear-gradient(135deg, #0891b2, #2563eb);
+  box-shadow: 0 4px 20px rgba(8, 145, 178, 0.3);
+}
+.politics-theme {
+  background: linear-gradient(135deg, #dc2626, #ea580c);
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+}
+.graph-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+.graph-title {
+  font-size: 20px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
+.graph-desc {
+  font-size: 13px;
+  opacity: 0.9;
+}
+</style>
