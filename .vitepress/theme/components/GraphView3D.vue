@@ -23,7 +23,11 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 const props = defineProps({
   nodes: { type: Array, default: () => [] },
   edges: { type: Array, default: () => [] },
-  backUrl: { type: String, default: './' }
+  backUrl: { type: String, default: './' },
+  bgColor: { type: String, default: '#0f172a' },
+  nodeColor: { type: String, default: 'rgba(79, 70, 229, 0.9)' },
+  textColor: { type: String, default: '#ffffff' },
+  linkColor: { type: String, default: '#64748b' }
 })
 
 const graphContainer = ref(null)
@@ -70,7 +74,7 @@ onMounted(async () => {
 
     // 圆角背景
     const r = 10
-    ctx.fillStyle = 'rgba(59, 130, 246, 0.9)'
+    ctx.fillStyle = props.nodeColor
     ctx.beginPath()
     ctx.moveTo(r, 0)
     ctx.lineTo(w - r, 0)
@@ -85,7 +89,7 @@ onMounted(async () => {
     ctx.fill()
 
     // 文字
-    ctx.fillStyle = '#ffffff'
+    ctx.fillStyle = props.textColor
     ctx.font = `bold ${fontSize}px "Microsoft YaHei", "PingFang SC", sans-serif`
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
@@ -104,10 +108,10 @@ onMounted(async () => {
     .nodeThreeObject(node => createTextSprite(node.label))
     .nodeThreeObjectExtend(false)
     .linkWidth(1.2)
-    .linkColor(() => '#64748b')
+    .linkColor(() => props.linkColor)
     .linkOpacity(0.5)
     .linkDirectionalArrowLength(0)
-    .backgroundColor('#0f172a')
+    .backgroundColor(props.bgColor)
     .showNavInfo(false)
     .onNodeClick(node => {
       if (node.url) {

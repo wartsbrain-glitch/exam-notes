@@ -27,4 +27,11 @@ const edges = [
 ]
 </script>
 
-<GraphView3D :nodes="nodes" :edges="edges" backUrl="./" />
+<GraphView3D
+  :nodes="nodes"
+  :edges="edges"
+  backUrl="./"
+  bgColor="#0c1f2c"
+  nodeColor="rgba(6, 182, 212, 0.9)"
+  linkColor="#5a7a8a"
+/>
