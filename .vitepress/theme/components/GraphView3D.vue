@@ -2,6 +2,32 @@
   <div class="graph-wrapper">
     <div ref="graphContainer" class="graph-container-3d"></div>
     <a :href="backUrl" class="back-btn">← 返回笔记目录</a>
+
+    <!-- 配色面板 -->
+    <div class="color-panel">
+      <button class="color-toggle" @click="showPanel = !showPanel">
+        {{ showPanel ? '收起' : '🎨 配色' }}
+      </button>
+      <div v-if="showPanel" class="color-picker">
+        <label>
+          <span>背景</span>
+          <input type="color" v-model="currentBg" />
+        </label>
+        <label>
+          <span>节点</span>
+          <input type="color" v-model="currentNode" />
+        </label>
+        <label>
+          <span>文字</span>
+          <input type="color" v-model="currentText" />
+        </label>
+        <label>
+          <span>连线</span>
+          <input type="color" v-model="currentLink" />
+        </label>
+      </div>
+    </div>
+
     <div v-if="selectedLink" class="link-modal-overlay" @click.self="selectedLink = null">
       <div class="link-modal">
         <h4>概念关系</h4>
@@ -18,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 
 const props = defineProps({
   nodes: { type: Array, default: () => [] },
@@ -29,6 +55,30 @@ const props = defineProps({
   textColor: { type: String, default: '#ffffff' },
   linkColor: { type: String, default: '#64748b' }
 })
+
+// 颜色转换辅助
+function toHex(color) {
+  if (!color) return '#4f46e5'
+  if (color.startsWith('#')) return color
+  const m = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
+  if (m) {
+    return '#' + [1, 2, 3].map(i => parseInt(m[i]).toString(16).padStart(2, '0')).join('')
+  }
+  return '#4f46e5'
+}
+
+function hexToRgba(hex, alpha = 0.9) {
+  const r = parseInt(hex.slice(1, 3), 16)
+  const g = parseInt(hex.slice(3, 5), 16)
+  const b = parseInt(hex.slice(5, 7), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
+const currentBg = ref(toHex(props.bgColor))
+const currentNode = ref(toHex(props.nodeColor))
+const currentText = ref(toHex(props.textColor))
+const currentLink = ref(toHex(props.linkColor))
+const showPanel = ref(false)
 
 const graphContainer = ref(null)
 const selectedLink = ref(null)
@@ -72,9 +122,8 @@ onMounted(async () => {
     canvas.width = w
     canvas.height = h
 
-    // 圆角背景
     const r = 10
-    ctx.fillStyle = props.nodeColor
+    ctx.fillStyle = hexToRgba(currentNode.value, 0.9)
     ctx.beginPath()
     ctx.moveTo(r, 0)
     ctx.lineTo(w - r, 0)
@@ -88,8 +137,7 @@ onMounted(async () => {
     ctx.closePath()
     ctx.fill()
 
-    // 文字
-    ctx.fillStyle = props.textColor
+    ctx.fillStyle = currentText.value
     ctx.font = `bold ${fontSize}px "Microsoft YaHei", "PingFang SC", sans-serif`
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
@@ -108,10 +156,10 @@ onMounted(async () => {
     .nodeThreeObject(node => createTextSprite(node.label))
     .nodeThreeObjectExtend(false)
     .linkWidth(1.2)
-    .linkColor(() => props.linkColor)
+    .linkColor(() => currentLink.value)
     .linkOpacity(0.5)
     .linkDirectionalArrowLength(0)
-    .backgroundColor(props.bgColor)
+    .backgroundColor(currentBg.value)
     .showNavInfo(false)
     .onNodeClick(node => {
       if (node.url) {
@@ -139,6 +187,21 @@ onMounted(async () => {
     }
   })
   resizeObserver.observe(graphContainer.value)
+
+  // 动态配色监听
+  watch(currentBg, val => {
+    if (graphInstance) graphInstance.backgroundColor(val)
+  })
+
+  watch(currentLink, val => {
+    if (graphInstance) graphInstance.linkColor(() => val)
+  })
+
+  watch([currentNode, currentText], () => {
+    if (graphInstance) {
+      graphInstance.nodeThreeObject(node => createTextSprite(node.label))
+    }
+  })
 })
 
 onUnmounted(() => {
@@ -190,6 +253,62 @@ onUnmounted(() => {
 .back-btn:hover {
   background: rgba(51, 65, 85, 0.9);
 }
+
+/* 配色面板 */
+.color-panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.color-toggle {
+  background: rgba(30, 41, 59, 0.85);
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s;
+}
+.color-toggle:hover {
+  background: rgba(51, 65, 85, 0.95);
+}
+.color-picker {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  min-width: 160px;
+}
+.color-picker label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #cbd5e1;
+  font-size: 13px;
+  gap: 12px;
+}
+.color-picker input[type="color"] {
+  width: 32px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+}
+
 .link-modal-overlay {
   position: fixed;
   inset: 0;
