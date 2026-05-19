@@ -106,9 +106,7 @@ onMounted(async () => {
     .linkWidth(1.2)
     .linkColor(() => '#64748b')
     .linkOpacity(0.5)
-    .linkDirectionalArrowLength(6)
-    .linkDirectionalArrowRelPos(1)
-    .linkDirectionalArrowColor(() => '#64748b')
+    .linkDirectionalArrowLength(0)
     .backgroundColor('#0f172a')
     .showNavInfo(false)
     .onNodeClick(node => {
