@@ -5,6 +5,7 @@ export default defineConfig({
   title: '考研知识库',
   description: '数学 / 英语 / 政治 / 信号与系统',
   lang: 'zh-CN',
+  base: '/exam-notes/',
 
   themeConfig: {
     nav: [
