@@ -50,8 +50,8 @@ onMounted(async () => {
   const fg = ForceGraph3D.default
 
   const data = {
-    nodes: props.nodes.map(n => ({ ...n })),
-    links: props.edges.map(e => ({ id: e.id, source: e.source, target: e.target, label: e.label }))
+    nodes: props.nodes.map(n => JSON.parse(JSON.stringify(n))),
+    links: props.edges.map(e => JSON.parse(JSON.stringify({ id: e.id, source: e.source, target: e.target, label: e.label })))
   }
 
   function createTextSprite(text) {
@@ -115,7 +115,11 @@ onMounted(async () => {
       }
     })
     .onLinkClick(link => {
-      selectedLink.value = link
+      selectedLink.value = {
+        source: link.source,
+        target: link.target,
+        label: link.label
+      }
     })
     .onBackgroundClick(() => {
       selectedLink.value = null
