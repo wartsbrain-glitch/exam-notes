@@ -46,6 +46,7 @@ let resizeObserver = null
 
 onMounted(async () => {
   const ForceGraph3D = await import('3d-force-graph')
+  const THREE = await import('three')
   const fg = ForceGraph3D.default
 
   const data = {
@@ -53,16 +54,59 @@ onMounted(async () => {
     links: props.edges.map(e => ({ id: e.id, source: e.source, target: e.target, label: e.label }))
   }
 
+  function createTextSprite(text) {
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    const fontSize = 40
+    ctx.font = `bold ${fontSize}px "Microsoft YaHei", "PingFang SC", sans-serif`
+    const metrics = ctx.measureText(text)
+    const padX = 32
+    const padY = 20
+    const w = Math.ceil(metrics.width) + padX * 2
+    const h = fontSize + padY * 2
+
+    canvas.width = w
+    canvas.height = h
+
+    // 圆角背景
+    const r = 10
+    ctx.fillStyle = 'rgba(59, 130, 246, 0.9)'
+    ctx.beginPath()
+    ctx.moveTo(r, 0)
+    ctx.lineTo(w - r, 0)
+    ctx.quadraticCurveTo(w, 0, w, r)
+    ctx.lineTo(w, h - r)
+    ctx.quadraticCurveTo(w, h, w - r, h)
+    ctx.lineTo(r, h)
+    ctx.quadraticCurveTo(0, h, 0, h - r)
+    ctx.lineTo(0, r)
+    ctx.quadraticCurveTo(0, 0, r, 0)
+    ctx.closePath()
+    ctx.fill()
+
+    // 文字
+    ctx.fillStyle = '#ffffff'
+    ctx.font = `bold ${fontSize}px "Microsoft YaHei", "PingFang SC", sans-serif`
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText(text, w / 2, h / 2)
+
+    const texture = new THREE.CanvasTexture(canvas)
+    texture.needsUpdate = true
+    const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false })
+    const sprite = new THREE.Sprite(material)
+    sprite.scale.set(w / 18, h / 18, 1)
+    return sprite
+  }
+
   graphInstance = fg()(graphContainer.value)
     .graphData(data)
-    .nodeLabel('label')
-    .nodeColor(() => '#4f46e5')
-    .nodeRelSize(7)
-    .nodeOpacity(0.95)
+    .nodeThreeObject(node => createTextSprite(node.label))
+    .nodeThreeObjectExtend(false)
     .linkWidth(1.2)
     .linkColor(() => '#64748b')
-    .linkOpacity(0.6)
-    .linkDirectionalArrowLength(8)
+    .linkOpacity(0.5)
+    .linkDirectionalArrowLength(6)
     .linkDirectionalArrowRelPos(1)
     .linkDirectionalArrowColor(() => '#64748b')
     .backgroundColor('#0f172a')
