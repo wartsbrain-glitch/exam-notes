@@ -4,6 +4,8 @@ sidebar: false
 ---
 
 <script setup>
+import { ref } from 'vue'
+
 const nodes = [
   { id: 'limit', label: '极限', url: '/exam-notes/math/calculus-limit' },
   { id: 'derivative', label: '导数', url: '/exam-notes/math/calculus-derivative' },
@@ -29,13 +31,60 @@ const edges = [
   { id: 'e9', source: 'matrix', target: 'eigen', label: '特征值是矩阵的特征' },
   { id: 'e10', source: 'probability', target: 'distribution', label: '分布描述随机变量的概率规律' }
 ]
+
+const bg = ref('#0f172a')
+const node = ref('rgba(79, 70, 229, 0.9)')
+const text = ref('#ffffff')
+const link = ref('#64748b')
 </script>
 
 <GraphView3D
   :nodes="nodes"
   :edges="edges"
   backUrl="./"
-  bgColor="#0f172a"
-  nodeColor="rgba(79, 70, 229, 0.9)"
-  linkColor="#64748b"
+  :bgColor="bg"
+  :nodeColor="node"
+  :textColor="text"
+  :linkColor="link"
 />
+
+<div class="color-bar">
+  <label>背景 <input type="color" v-model="bg" /></label>
+  <label>节点 <input type="color" v-model="node" /></label>
+  <label>文字 <input type="color" v-model="text" /></label>
+  <label>连线 <input type="color" v-model="link" /></label>
+</div>
+
+<style>
+.color-bar {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 101;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  gap: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.color-bar label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #cbd5e1;
+  font-size: 12px;
+  cursor: pointer;
+}
+.color-bar input[type="color"] {
+  width: 28px;
+  height: 22px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+}
+</style>
